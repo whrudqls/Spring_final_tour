@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qna">
+	<insert id="write" parameterType="qvo">
+		insert into qna_semi values(qna_semi_seq.nextVal,
+		#{qwriter }, #{qsubject }, #{qcontent }, sysdate)
+	</insert>
+	<select id="list" resultType="qvo">
+		select * from qna_semi order by 1 desc
+	</select>
+	<select id="detail" parameterType="int" resultType="qvo">
+		select * from qna_semi where qnum = #{qnum }
+	</select>
+	<insert id="answer" parameterType="qvo">
+		insert into qna_comm_semi values(qna_comm_semi_seq.nextVal, #{acode }, #{awriter }, #{acontent }, sysdate)
+	</insert>
+	<select id="listAnswer" parameterType="int" resultType="avo">
+		select * from qna_comm_semi where acode = #{qnum }
+	</select>
+	<update id="update" parameterType="qvo">
+		update qna_semi set qsubject = #{qsubject }, qcontent = #{qcontent } where qwriter = #{qwriter }
+	</update>
+	<delete id="delete" parameterType="String">
+		delete from qna_semi where qwriter = #{pid }
+	</delete>
+</mapper>
